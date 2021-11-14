@@ -230,3 +230,5 @@ export interface Offset {
   width?: number;
   height?: number;
 }
+
+export type OnChangeCallback<T, E = React.SyntheticEvent> = (value: T, event: E) => void;

@@ -71,7 +71,14 @@ const SidenavDropdownItem: RsRefForwardingComponent<'li', SidenavDropdownItemPro
       ...rest
     } = props;
 
-    const { activeKey, onSelect: onSidenavSelect } = useContext(SidenavContext);
+    const sidenavContext = useContext(SidenavContext);
+
+    if (!sidenavContext) {
+      throw new Error(
+        '<SidenavDropdownItem> component is not supposed to be used standalone. Use <Dropdown.Item> inside <Sidenav> instead.'
+      );
+    }
+    const { activeKey, onSelect: onSidenavSelect } = sidenavContext;
     const nav = useContext(NavContext);
     const dropdown = useContext(DropdownContext);
 

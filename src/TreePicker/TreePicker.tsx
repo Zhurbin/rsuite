@@ -120,7 +120,7 @@ const TreePicker: PickerComponent<TreePickerProps> = React.forwardRef((props, re
     cleanable = true,
     menuStyle,
     searchable = true,
-    virtualized,
+    virtualized = false,
     classPrefix = 'picker',
     defaultValue,
     placeholder,
@@ -164,12 +164,12 @@ const TreePicker: PickerComponent<TreePickerProps> = React.forwardRef((props, re
     renderDragNode,
     ...rest
   } = props;
-  const triggerRef = useRef<OverlayTriggerInstance>();
+  const triggerRef = useRef<OverlayTriggerInstance>(null);
   const targetRef = useRef<HTMLButtonElement>();
   const listRef = useRef<ListInstance>();
   const overlayRef = useRef<HTMLDivElement>();
-  const searchInputRef = useRef<HTMLInputElement>();
-  const treeViewRef = useRef<HTMLDivElement>();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const treeViewRef = useRef<HTMLDivElement>(null);
   const { rtl, locale } = useCustom<PickerLocale>('Picker', overrideLocale);
   const { inline, dragNodeRef } = useContext(TreeContext);
 
@@ -215,10 +215,10 @@ const TreePicker: PickerComponent<TreePickerProps> = React.forwardRef((props, re
       searchBy,
       callback: (
         searchKeyword: string,
-        _filterData: TreeNodeType[],
-        event: React.KeyboardEvent<HTMLInputElement>
+        _filterData: ItemDataType[],
+        event: React.SyntheticEvent
       ) => {
-        onSearch?.(searchKeyword, event);
+        onSearch?.(searchKeyword, event as React.KeyboardEvent<HTMLInputElement>);
       }
     });
 
@@ -262,12 +262,12 @@ const TreePicker: PickerComponent<TreePickerProps> = React.forwardRef((props, re
 
   const focusActiveNode = useCallback(() => {
     focusToActiveTreeNode({
-      list: listRef.current,
+      list: listRef.current!,
       valueKey,
       selector: `.${treePrefix('node-active')}`,
       activeNode,
       virtualized,
-      container: treeViewRef.current,
+      container: treeViewRef.current!,
       formattedNodes: getFormattedNodes()
     });
   }, [treePrefix, activeNode, getFormattedNodes, valueKey, virtualized]);
@@ -844,7 +844,7 @@ const TreePicker: PickerComponent<TreePickerProps> = React.forwardRef((props, re
     const node = activeNode ?? {};
     selectedElement = node[labelKey];
     if (isFunction(renderValue)) {
-      selectedElement = renderValue(value, node, selectedElement);
+      selectedElement = renderValue(value!, node, selectedElement);
       if (isNil(selectedElement)) {
         hasValidValue = false;
       }

@@ -18,7 +18,7 @@ export interface LocaleType {
 export interface InputProps
   extends WithAsProps,
     Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'>,
-    FormControlBaseProps {
+    Omit<FormControlBaseProps, 'onChange'> {
   /** The HTML input type */
   type?: string;
 
