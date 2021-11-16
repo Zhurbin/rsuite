@@ -66,7 +66,7 @@ const Toolbar: RsRefForwardingComponent<'div', ToolbarProps> = React.forwardRef(
             disabled={disabled}
             onClick={disabled ? undefined : onOk}
           >
-            {locale?.ok}
+            Apply
           </Button>
         </div>
       );
@@ -80,28 +80,12 @@ const Toolbar: RsRefForwardingComponent<'div', ToolbarProps> = React.forwardRef(
     return (
       <Component {...rest} ref={ref} className={classes}>
         <div className={prefix('ranges')}>
-          {ranges.map(({ value, closeOverlay, label }, index: number) => {
-            const disabled = disabledShortcut?.(value);
-
-            const handleClickShortcut = (event: React.MouseEvent) => {
-              if (disabled) {
-                return;
-              }
-              onClickShortcut?.(value, closeOverlay, event);
-            };
-
-            return (
-              <Button
-                appearance="link"
-                size="sm"
-                key={index}
-                disabled={disabled}
-                onClick={handleClickShortcut}
-              >
-                {hasLocaleKey(label) && typeof label === 'string' ? locale?.[label] : label}
-              </Button>
-            );
-          })}
+          <Button
+            appearance="default"
+            size="sm"
+          >
+            Cancel
+          </Button>
         </div>
         {renderOkButton()}
       </Component>

@@ -1,7 +1,7 @@
 <!--start-code-->
 
 ```js
-const instance = <DateRangePicker />;
+const instance = <DateRangePicker showOneCalendar isoWeek />;
 ReactDOM.render(instance);
 ```
 

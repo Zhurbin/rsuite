@@ -27,6 +27,7 @@ export interface CalendarProps extends WithAsProps, Omit<CalendarCoreProps, Omit
   onSelect?: (date: Date, event?: React.SyntheticEvent) => void;
   showOneCalendar?: boolean;
   showWeekNumbers?: boolean;
+  previewOnly?: boolean;
   value?: ValueType;
 }
 
@@ -43,6 +44,7 @@ const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRe
       onChangeCalendarTime,
       showOneCalendar,
       value = [],
+      previewOnly,
       ...rest
     } = props;
     const [calendarState, setCalendarState] = useState<CalendarState>();
@@ -166,6 +168,7 @@ const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRe
         onToggleTimeDropdown={toggleTimeDropdown}
         calendarDate={getCalendarDate()}
         ref={ref}
+        previewOnly={previewOnly}
       />
     );
   }

@@ -5,6 +5,7 @@ import MonthDropdown from './MonthDropdown';
 import TimeDropdown from './TimeDropdown';
 import View from './View';
 import Header, { HeaderProps } from './Header';
+import TableHeaderRow from './TableHeaderRow';
 import { useClassNames, DateUtils, composeFunctions } from '../utils';
 import { RsRefForwardingComponent, WithAsProps } from '../@types/common';
 import { CalendarLocale } from '../locales';
@@ -92,6 +93,8 @@ export interface CalendarProps
   showWeekNumbers?: boolean;
 
   inline?: boolean;
+
+  previewOnly?: boolean;
 }
 
 const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRef(
@@ -127,6 +130,7 @@ const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRe
       showMeridian,
       showWeekNumbers,
       inline,
+      previewOnly,
       ...rest
     } = props;
     const { withClassPrefix, merge } = useClassNames(classPrefix);
@@ -192,6 +196,7 @@ const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRe
           className={calendarClasses}
           ref={ref}
         >
+          {!previewOnly && <TableHeaderRow />}
           <Header
             showMonth={showMonth}
             showDate={showDate}
@@ -207,8 +212,9 @@ const Calendar: RsRefForwardingComponent<'div', CalendarProps> = React.forwardRe
             renderToolbar={renderToolbar}
             disabledBackward={disabledBackward}
             disabledForward={disabledForward}
+            previewOnly={previewOnly}
           />
-          {showDate && <View />}
+          {showDate && <View previewOnly={previewOnly} />}
           {showMonth && (
             <MonthDropdown
               show={dropMonth}

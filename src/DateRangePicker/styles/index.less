@@ -9,7 +9,7 @@
 
 .rs-picker-daterange-menu {
   .rs-calendar {
-    display: inline-block;
+    // display: inline-block;
     height: 278px;
     padding-bottom: 12px;
 
@@ -54,6 +54,9 @@
       display: block;
       margin: auto;
     }
+
+    min-width: 308px;
+    max-height: 330px;
   }
 }
 
@@ -67,7 +70,15 @@
 
 // Calendar group
 .rs-picker-daterange-calendar-group {
-  height: 274px;
-  // Make sure group wrapper can put 2 date-panels even screen width is not enough.
-  min-width: 492px;
+  // height: 274px;
+  // // Make sure group wrapper can put 2 date-panels even screen width is not enough.
+  // min-width: 492px;
+
+  height: 374px;
+  min-width: 246px;
+  overflow: hidden;
+}
+
+.second-calendar {
+  z-index: -1;
 }

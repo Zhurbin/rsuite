@@ -126,12 +126,12 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
     className,
     appearance = 'default',
     cleanable = true,
-    character = ' ~ ',
+    character = ' - ',
     defaultCalendarValue,
     defaultValue,
     disabled,
     disabledDate: disabledDateProp,
-    format: formatStr = 'yyyy-MM-dd',
+    format: formatStr = 'dd/MM/yyyy',
     hoverRange,
     isoWeek,
     limitEndYear = 1000,
@@ -646,6 +646,9 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
     });
     const styles = { ...menuStyle, left, top };
 
+    const clonedCalendarDate = new Date(calendarDate[0]);
+    const previewCalendarDate = new Date(clonedCalendarDate?.setMonth(clonedCalendarDate.getMonth() + 1));
+
     const panelProps = {
       calendarDate,
       disabledDate: handleDisabledDate,
@@ -675,7 +678,19 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
             <div className={prefix('daterange-header')}>{getDisplayString(selectValue)}</div>
             <div className={prefix(`daterange-calendar-${showOneCalendar ? 'single' : 'group'}`)}>
               <Calendar index={0} {...panelProps} />
-              {!showOneCalendar && <Calendar index={1} {...panelProps} />}
+              <Calendar
+                  index={0}
+                  {...panelProps}
+                  calendarDate={[previewCalendarDate, calendarDate[1]]}
+                  previewOnly
+                  className='second-calendar'
+              />
+              {!showOneCalendar &&
+                <Calendar
+                  index={1}
+                  {...panelProps}
+                />
+              }
             </div>
           </div>
           <Toolbar

@@ -22,14 +22,18 @@ const TableHeaderRow: RsRefForwardingComponent<'div', TableHeaderRowProps> = Rea
     }
 
     return (
-      <Component role="row" {...rest} ref={ref} className={classes}>
-        {showWeekNumbers && <div className={prefix('cell')} role="columnheader" />}
-        {items.map(key => (
-          <div key={key} className={prefix('cell')} role="columnheader">
-            <span className={prefix('cell-content')}>{locale?.[key]}</span>
-          </div>
-        ))}
-      </Component>
+      <div className='rs-calendar-table-header-row-wrapper'>
+        <div className='rs-calendar-table-header-row-container'>
+          <Component role="row" {...rest} ref={ref} className={classes}>
+            {showWeekNumbers && <div className={prefix('cell')} role="columnheader" />}
+            {items.map(key => (
+              <div key={key} className={prefix('cell')} role="columnheader">
+                <span className={prefix('cell-content')}>{locale?.[key]}</span>
+              </div>
+            ))}
+          </Component>
+        </div>
+      </div>
     );
   }
 );

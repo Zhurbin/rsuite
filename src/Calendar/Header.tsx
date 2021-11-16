@@ -16,6 +16,7 @@ export interface HeaderProps extends WithAsProps {
   showMeridian?: boolean;
   showMonth?: boolean;
   showTime?: boolean;
+  previewOnly?: boolean;
   disabledTime?: (date: Date) => boolean;
   onMoveBackward?: () => void;
   onMoveForward?: () => void;
@@ -46,14 +47,15 @@ const Header: RsRefForwardingComponent<'div', HeaderProps> = React.forwardRef(
       onToggleTimeDropdown,
       renderTitle: renderTitleProp,
       renderToolbar,
+      previewOnly,
       ...rest
     } = props;
 
-    const { locale, date = new Date(), format, inline, disabledDate } = useCalendarContext();
+    const { locale, date = new Date(), format, disabledDate } = useCalendarContext();
     const { prefix, withClassPrefix, merge } = useClassNames(classPrefix);
     const btnProps: ButtonProps = {
       appearance: 'subtle',
-      size: inline ? 'sm' : 'xs'
+      size: 'md',
     };
 
     const getTimeFormat = useCallback(() => {
@@ -77,6 +79,8 @@ const Header: RsRefForwardingComponent<'div', HeaderProps> = React.forwardRef(
     }, [format, showMeridian]);
 
     const getDateFormat = useCallback(() => {
+      return 'MMM yyyy';
+
       if (showDate) {
         return locale?.formattedDayPattern || 'yyyy-MM-dd';
       } else if (showMonth) {
@@ -100,21 +104,25 @@ const Header: RsRefForwardingComponent<'div', HeaderProps> = React.forwardRef(
 
     const monthToolbar = (
       <div className={prefix('month-toolbar')}>
-        <IconButton
-          {...btnProps}
-          className={backwardClass}
-          onClick={disabledBackward ? undefined : onMoveBackward}
-          icon={<AngleLeftIcon />}
-        />
+        {!previewOnly &&
+          <IconButton
+            {...btnProps}
+            className={backwardClass}
+            onClick={disabledBackward ? undefined : onMoveBackward}
+            icon={<AngleLeftIcon />}
+          />
+        }
         <Button {...btnProps} className={dateTitleClasses} onClick={onToggleMonthDropdown}>
           {renderTitle()}
         </Button>
-        <IconButton
-          {...btnProps}
-          className={forwardClass}
-          onClick={disabledForward ? undefined : onMoveForward}
-          icon={<AngleRightIcon />}
-        />
+        {!previewOnly &&
+          <IconButton
+            {...btnProps}
+            className={forwardClass}
+            onClick={disabledForward ? undefined : onMoveForward}
+            icon={<AngleRightIcon />}
+          />
+        }
       </div>
     );
 

@@ -10,7 +10,7 @@
   padding-top: @calendar-picker-padding;
   position: relative;
   min-height: 266px;
-  overflow: hidden;
+  overflow: visible;
 
   &-bordered &-table {
     border: 1px solid var(--rs-border-primary);
@@ -196,8 +196,7 @@
     content: '';
     display: block;
     width: 100%;
-    margin-top: 4px;
-    height: 24px;
+    height: 100%;
     position: absolute;
     z-index: @zindex-date-range-picker-table-cell-content - 1;
     top: 0;
@@ -279,7 +278,7 @@
 
   &-has-month:not(&-has-time) &-month-toolbar {
     display: block;
-    text-align: center;
+    text-align: left;
     width: 100%;
     .clearfix();
   }
@@ -323,7 +322,7 @@
 /* rtl:end:ignore */
 
 .rs-calendar-view {
-  padding: @calendar-picker-view-padding-top @calendar-picker-padding @calendar-picker-padding;
+  padding: @calendar-picker-view-padding-top 48px @calendar-picker-padding @calendar-picker-padding;
 }
 
 // Calendar Table
@@ -390,7 +389,8 @@
   .picker-calendar-cell-content();
 
   .rs-calendar-table-cell-is-today & {
-    box-shadow: inset 0 0 0 1px var(--rs-input-focus-border);
+    border-radius: 50%;
+    background-color: #E4F7FB;
   }
 
   .rs-calendar-table-cell-selected & {
@@ -621,4 +621,59 @@
   to {
     transform: translateY(0);
   }
+}
+
+.rs-calendar-header {
+  &-backward,
+  &-forward {
+    .rs-icon {
+      transform: rotate(90deg);
+    }
+  }
+
+  &-backward {
+    position: absolute;
+    top: 9px;
+    right: 8px;
+  }
+
+  &-forward {
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+  }
+}
+
+.rs-calendar-table-header-row-wrapper {
+  padding: 0 48px 0 @calendar-picker-padding;
+}
+
+.rs-calendar-table-header-row-container {
+  border-bottom: 1px solid #E7E9EE;
+}
+
+.rs-calendar-table-cell-selected-start {
+  .rs-calendar-table-cell-content {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.rs-calendar-table-cell-selected-end {
+  .rs-calendar-table-cell-content {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.rs-picker-menu:hover {
+  border-radius: none;
+}
+
+.rs-calendar-header-title-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A4A49;
+  margin: 0;
+  padding-left: 6px;
 }
