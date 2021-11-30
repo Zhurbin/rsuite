@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FormControlBaseProps, PickerBaseProps } from '../@types/common';
 import { FormattedDate } from '../CustomProvider';
 import Toolbar from '../DatePicker/Toolbar';
+import MaskedInput from '../MaskedInput';
 import { DateRangePickerLocale } from '../locales';
 import {
   omitTriggerPropKeys,
@@ -485,6 +486,49 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
     [handleValueUpdate, updateCalendarDate]
   );
 
+    /**
+   * Callback after the input box value is changed.
+   */
+     const handleSingleInputChange = useCallback(
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputState('Typing');
+  
+        const value = event.target?.value;
+
+        const rangeValue = [value, value];
+  
+        // isMatch('01/11/2020', 'MM/dd/yyyy') ==> true
+        // isMatch('2020-11-01', 'MM/dd/yyyy') ==> false
+        if (
+          !DateUtils.isMatch(rangeValue[0], formatStr, { locale: locale.dateLocale }) ||
+          !DateUtils.isMatch(rangeValue[1], formatStr, { locale: locale.dateLocale })
+        ) {
+          setInputState('Error');
+          return;
+        }
+  
+        const startDate = parseDate(rangeValue[0], formatStr);
+        const endDate = parseDate(rangeValue[1], formatStr);
+        const selectValue = [startDate, endDate] as ValueType;
+  
+        if (!DateUtils.isValid(startDate) || !DateUtils.isValid(endDate)) {
+          setInputState('Error');
+          return;
+        }
+  
+        if (disabledDate(startDate, selectValue, true, DATERANGE_DISABLED_TARGET.CALENDAR)) {
+          setInputState('Error');
+          return;
+        }
+  
+        setHoverValue(selectValue);
+        setSelectValue(selectValue);
+        updateCalendarDate(selectValue);
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [character, rangeFormatStr, updateCalendarDate]
+    );
+
   /**
    * Callback after the input box value is changed.
    */
@@ -675,7 +719,28 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
       >
         <div className={panelClasses}>
           <div className={prefix('daterange-content')}>
-            <div className={prefix('daterange-header')}>{getDisplayString(selectValue)}</div>
+            <div className={prefix('daterange-header')}>
+              {/* {getDisplayString(selectValue)} */}
+              <MaskedInput
+                onBlur={handleInputPressEnd}
+                // onFocus={onInputFocus}
+                onChange={handleSingleInputChange}
+                onKeyDown={onPickerKeyDown}
+                // id={id}
+                // aria-hidden={!inputFocused}
+                // readOnly={!inputFocused}
+                disabled={disabled}
+                // aria-controls={id ? `${id}-listbox` : undefined}
+                tabIndex={-1}
+                className={prefix('textbox')}
+                // render={(ref, props) => <input ref={mergeRefs(inputRef, ref)} {...props} />}
+
+                mask={DateUtils.getDateMask(formatStr)}
+                // value={value ? (getDisplayString(value, true) as string) : ''}
+                value={selectValue[0] ? formatDate(selectValue[0], formatStr) : ''}
+                placeholder={formatStr}
+              />
+            </div>
             <div className={prefix(`daterange-calendar-${showOneCalendar ? 'single' : 'group'}`)}>
               <Calendar index={0} {...panelProps} />
               <Calendar
@@ -693,16 +758,18 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
               }
             </div>
           </div>
-          <Toolbar
-            locale={locale}
-            calendarDate={selectValue}
-            disabledOkBtn={disabledOkButton}
-            disabledShortcut={disabledShortcutButton}
-            hideOkBtn={oneTap}
-            onOk={handleOK}
-            onClickShortcut={handleShortcutPageDate}
-            ranges={ranges}
-          />
+          {!oneTap && (
+            <Toolbar
+              locale={locale}
+              calendarDate={selectValue}
+              disabledOkBtn={disabledOkButton}
+              disabledShortcut={disabledShortcutButton}
+              hideOkBtn={oneTap}
+              onOk={handleOK}
+              onClickShortcut={handleShortcutPageDate}
+              ranges={ranges}
+            />
+          )}
         </div>
       </PickerOverlay>
     );

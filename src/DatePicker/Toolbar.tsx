@@ -1,9 +1,9 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import { useClassNames, useUpdateEffect } from '../utils';
 import { RsRefForwardingComponent, WithAsProps } from '../@types/common';
-import { getDefaultRanges, getRanges } from './utils';
+import { getRanges } from './utils';
 import { InnerRange, RangeType, ToolbarValue } from './types';
 import { CalendarLocale } from '../locales';
 
@@ -30,13 +30,10 @@ const Toolbar: RsRefForwardingComponent<'div', ToolbarProps> = React.forwardRef(
       className,
       classPrefix = 'picker-toolbar',
       disabledOkBtn,
-      disabledShortcut,
       hideOkBtn,
       onOk,
-      onClickShortcut,
       calendarDate,
       ranges: rangesProp,
-      locale,
       ...rest
     } = props;
     const [ranges, setRanges] = useState<InnerRange[]>(getRanges(props));
@@ -45,11 +42,6 @@ const Toolbar: RsRefForwardingComponent<'div', ToolbarProps> = React.forwardRef(
     useUpdateEffect(() => {
       setRanges(getRanges({ ranges: rangesProp, calendarDate }));
     }, [calendarDate, rangesProp]);
-
-    const hasLocaleKey = useCallback(
-      (key: ReactNode) => getDefaultRanges(calendarDate).some(item => item.label === key),
-      [calendarDate]
-    );
 
     const renderOkButton = useCallback(() => {
       if (hideOkBtn) {
@@ -70,7 +62,7 @@ const Toolbar: RsRefForwardingComponent<'div', ToolbarProps> = React.forwardRef(
           </Button>
         </div>
       );
-    }, [disabledOkBtn, hideOkBtn, locale, onOk, calendarDate, prefix]);
+    }, [disabledOkBtn, hideOkBtn, onOk, calendarDate, prefix]);
 
     if (hideOkBtn && ranges.length === 0) {
       return null;

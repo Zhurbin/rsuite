@@ -10,7 +10,7 @@
 .rs-picker-daterange-menu {
   .rs-calendar {
     // display: inline-block;
-    height: 278px;
+    height: 276px;
     padding-bottom: 12px;
 
     &:first-child {
@@ -56,16 +56,15 @@
     }
 
     min-width: 308px;
-    max-height: 330px;
+    max-height: 371px;
   }
 }
 
 // Header
 .rs-picker-daterange-header {
-  padding: @date-range-picker-header-padding-vertical @picker-menu-padding;
+  padding: 16px 12px 12px;
   font-size: @date-range-picker-header-font-size;
   line-height: @date-range-picker-header-line-height;
-  border-bottom: 1px solid var(--rs-border-primary);
 }
 
 // Calendar group
@@ -80,5 +79,26 @@
 }
 
 .second-calendar {
-  z-index: -1;
+  width: calc(100% - 40px);
+
+  .rs-calendar-view {
+    padding: 4px 8px 12px 12px;
+  }
+
+  .rs-calendar-table-cell-is-today .rs-calendar-table-cell-content {
+    background: none;
+  }
+}
+
+.rs-picker-daterange-menu .rs-picker-daterange-calendar-single .rs-calendar.second-calendar {
+  margin: 0;
+}
+
+.rs-picker-textbox {
+  border: 1px solid #bdcfe1;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #4a4a49;
+  padding: 5px 12px;
+  width: 100%;
 }

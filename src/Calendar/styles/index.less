@@ -7,7 +7,7 @@
 // ----------------------
 
 .rs-calendar {
-  padding-top: @calendar-picker-padding;
+  padding-top: 0;
   position: relative;
   min-height: 266px;
   overflow: visible;
@@ -639,7 +639,7 @@
 
   &-forward {
     position: absolute;
-    bottom: -40px;
+    bottom: -81px;
     right: 0;
   }
 }
@@ -666,6 +666,12 @@
   }
 }
 
+.rs-calendar-table-cell-selected-start.rs-calendar-table-cell-selected-end {
+  .rs-calendar-table-cell-content{
+    border-radius: 4px;
+  }
+}
+
 .rs-picker-menu:hover {
   border-radius: none;
 }
@@ -675,5 +681,6 @@
   font-weight: 600;
   color: #4A4A49;
   margin: 0;
-  padding-left: 6px;
+
+  padding: 16px 12px 8px 10px;
 }
