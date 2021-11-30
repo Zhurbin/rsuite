@@ -92,6 +92,9 @@ export interface DateRangePickerProps extends PickerBaseProps, FormControlBasePr
 
   /** Custom render value */
   renderValue?: (value: ValueType, format: string) => React.ReactNode;
+
+    /** Custom render picker */
+  renderCustomPicker?: (value: ValueType, format: string) => React.ReactNode;
 }
 
 export interface DateRangePicker extends PickerComponent<DateRangePickerProps> {
@@ -159,6 +162,7 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
     onOk,
     onOpen,
     onSelect,
+    renderCustomPicker,
     ...rest
   } = props;
   const { merge, prefix } = useClassNames(classPrefix);
@@ -802,35 +806,37 @@ const DateRangePicker: DateRangePicker = React.forwardRef((props: DateRangePicke
         })}
         style={style}
       >
-        <PickerToggle
-          {...omit(rest, [
-            ...omitTriggerPropKeys,
-            ...usedClassNamePropKeys,
-            ...DateUtils.calendarOnlyProps
-          ])}
-          as={toggleAs}
-          ref={targetRef}
-          appearance={appearance}
-          input
-          inputMask={DateUtils.getDateMask(rangeFormatStr)}
-          inputValue={value ? (getDisplayString(value, true) as string) : ''}
-          inputPlaceholder={
-            typeof placeholder === 'string' && placeholder ? placeholder : rangeFormatStr
-          }
-          onInputChange={handleInputChange}
-          onInputBlur={handleInputPressEnd}
-          onInputPressEnter={handleInputPressEnd}
-          onKeyDown={onPickerKeyDown}
-          onClean={createChainedFunction(handleClean, onClean)}
-          cleanable={cleanable && !disabled}
-          hasValue={hasValue}
-          active={isPickerToggleActive}
-          placement={placement}
-          caretComponent={IconCalendar}
-          disabled={disabled}
-        >
-          {getDisplayString()}
-        </PickerToggle>
+        {renderCustomPicker ? renderCustomPicker(value, formatStr) : (
+          <PickerToggle
+            {...omit(rest, [
+              ...omitTriggerPropKeys,
+              ...usedClassNamePropKeys,
+              ...DateUtils.calendarOnlyProps
+            ])}
+            as={toggleAs}
+            ref={targetRef}
+            appearance={appearance}
+            input
+            inputMask={DateUtils.getDateMask(rangeFormatStr)}
+            inputValue={value ? (getDisplayString(value, true) as string) : ''}
+            inputPlaceholder={
+              typeof placeholder === 'string' && placeholder ? placeholder : rangeFormatStr
+            }
+            onInputChange={handleInputChange}
+            onInputBlur={handleInputPressEnd}
+            onInputPressEnter={handleInputPressEnd}
+            onKeyDown={onPickerKeyDown}
+            onClean={createChainedFunction(handleClean, onClean)}
+            cleanable={cleanable && !disabled}
+            hasValue={hasValue}
+            active={isPickerToggleActive}
+            placement={placement}
+            caretComponent={IconCalendar}
+            disabled={disabled}
+          >
+            {getDisplayString()}
+          </PickerToggle>
+        )}
       </Component>
     </PickerToggleTrigger>
   );
