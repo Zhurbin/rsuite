@@ -216,3 +216,7 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
+
+& when (@enable-css-reset = true) {
+  @import 'scaffolding';
+}

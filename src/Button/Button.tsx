@@ -53,7 +53,7 @@ const Button: RsRefForwardingComponent<'button', ButtonProps> = React.forwardRef
       color,
       disabled,
       loading,
-      ripple = true,
+      ripple = false,
       size,
       type: typeProp,
       ...rest

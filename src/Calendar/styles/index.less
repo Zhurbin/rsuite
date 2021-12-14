@@ -628,24 +628,25 @@
   &-forward {
     .rs-icon {
       transform: rotate(90deg);
+      font-size: 18px !important;
     }
   }
 
   &-backward {
     position: absolute;
-    top: 9px;
-    right: 8px;
+    top: -8px;
+    right: 2px;
   }
 
   &-forward {
     position: absolute;
-    bottom: -81px;
-    right: 0;
+    bottom: -91px;
+    right: 2px;
   }
 }
 
 .rs-calendar-table-header-row-wrapper {
-  padding: 0 48px 0 @calendar-picker-padding;
+  padding: 0 48px 8px 10px;
 }
 
 .rs-calendar-table-header-row-container {
@@ -682,5 +683,12 @@
   color: #4A4A49;
   margin: 0;
 
-  padding: 16px 12px 8px 10px;
+  padding: 8px 12px 8px 10px;
+}
+
+.rs-btn-subtle:hover,
+.rs-btn-subtle:focus,
+.rs-btn-subtle:active {
+  background: none;
+  box-shadow: none;
 }
