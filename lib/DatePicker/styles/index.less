@@ -50,6 +50,10 @@
     @datepicker-calendar-cell-gap-x * 6 + 30px * 7 + @datepicker-calendar-padding-x * 2
   );
 
+  margin-top: 4px;
+  border: 1px solid #E1E8F0;
+  box-shadow: 0px 8px 24px rgb(0 0 0 / 2%), 0px 2px 4px rgb(0 0 0 / 4%);
+
   .rs-picker-toolbar {
     max-width: 100%;
   }
@@ -95,13 +99,6 @@
       padding-left: 0;
       padding-right: 0;
       display: inline-block;
-    }
-
-    // There's a small gap between cell and cell-content (cell-content smaller than cell)
-    // So don't apply hover style directly on cell-content
-    .rs-calendar-table-cell:hover .rs-calendar-table-cell-content {
-      // borrowed from listbox option
-      .listbox-option-active();
     }
 
     .rs-calendar-month-dropdown-scroll {

@@ -15,34 +15,11 @@
   box-sizing: border-box;
 }
 
-body {
-  // Remove default margin.
-  margin: 0;
-  // Optimize for the retina screen
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 // Address `[hidden]` styling not present in IE 10.
 // Hide the `template` element in IE 10/11, Safari, and Firefox < 22.
 [hidden],
 template {
   display: none;
-}
-
-// Links
-// ==========================================================================
-
-// Remove the gray background color from active links in IE 10.
-a {
-  background-color: transparent;
-}
-
-// Improve readability of focused elements when they are also in an
-// active/hover state.
-a:active,
-a:hover {
-  outline: 0;
 }
 
 // Text-level semantics
@@ -240,9 +217,6 @@ textarea {
   line-height: inherit;
 }
 
-// import reset styles
 & when (@enable-css-reset = true) {
   @import 'scaffolding';
-  @import 'typography';
 }
-
