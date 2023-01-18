@@ -175,19 +175,6 @@
     ]
   },
   {
-    "id": "breadcrumb",
-    "name": "Breadcrumb",
-    "title": "面包屑",
-    "components": [
-      "Breadcrumb",
-      "Breadcrumb.Item"
-    ],
-    "designHash": {
-      "default": "37",
-      "dark": "37"
-    }
-  },
-  {
     "id": "dropdown",
     "name": "Dropdown",
     "title": "下拉菜单",

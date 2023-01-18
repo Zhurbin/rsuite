@@ -391,27 +391,6 @@ declare module "rsuite" {
     selectOnEnter?: boolean
   }> {}
 
-  declare export class BreadcrumbItem extends React$Component<{
-    active?: boolean,
-    className?: string,
-    style?: Object,
-    href?: string,
-    title?: ElementType,
-    target?: string,
-    classPrefix?: string,
-    componentClass?: ElementType
-  }> {}
-
-  declare export class Breadcrumb extends React$Component<{
-    separator?: Node,
-    componentClass?: ElementType,
-    children?: Node,
-    className?: string,
-    classPrefix?: string
-  }> {
-    static Item: Class<BreadcrumbItem>;
-  }
-
   declare export class Button extends React$Component<{
     appearance?: "default" | "primary" | "link" | "subtle" | "ghost",
     classPrefix?: string,

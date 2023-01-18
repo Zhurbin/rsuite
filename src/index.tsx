@@ -82,9 +82,6 @@ export type {
   SidenavBodyProps
 } from './Sidenav';
 
-export { default as Breadcrumb } from './Breadcrumb';
-export type { BreadcrumbProps, BreadcrumbItemProps } from './Breadcrumb';
-
 export { default as Pagination } from './Pagination';
 export type { PaginationProps, PaginationButtonProps, BasePaginationProps } from './Pagination';
 
